@@ -1,10 +1,12 @@
 import json
-from helper import createDocuments, assignPageNumbers, classify, pdf2JpgFromURL
+from helper import createDocuments, classify, pdf2JpgFromURL
 import tensorflow as tf
 from tensorflow import keras
 from Document import MyCustomFileEncoder
 import sys
 import os
+
+from pageNumberHelpers.extractPageNumber import assignPageNumbers
 
 print("keras version: {}".format(keras.__version__))
 print("tensorflow version: {}".format(tf.__version__))

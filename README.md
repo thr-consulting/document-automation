@@ -5,6 +5,6 @@
 - Get page number for each page
 
 ## Step 2
-- Create documents(s) based on page numbers and classes
+- Create document(s) based on page numbers and classes
 - Extract date for each document
 - Extract amount (future)
