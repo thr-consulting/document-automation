@@ -79,31 +79,3 @@ def get_coordinates_from_image(image_path):
 image_path = "/home/roland/dataset_2024/jpg_original/Scotia Credit/scotiaCC96-2.jpg"
 
 get_coordinates_from_image(image_path)
-
-# layout = Layout(
-#     "RBC Bank",
-#     [
-#         PageCoordinate(
-#             1,
-#             dd_of_dd,
-#             0.9003921568627451,
-#             0.8703030303030304,
-#             0.08941176470588236,
-#             0.0503030303030303,
-#         )
-#     ],
-#     [
-#         Coordinate(
-#             1,
-#             0.596078431372549,
-#             0.13333333333333333,
-#             0.396078431372549,
-#             0.044848484848484846,
-#         )
-#     ],
-# )
-
-
-# text = extract_text(image_path, layout.pageNumber[0])
-# processPageRegex(dd_of_dd, text)
-# extract_text(image_path, layout.date[0])

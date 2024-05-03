@@ -1,8 +1,8 @@
 import json
-from helper import createDocuments, assignPageNumbers, classify, pdf2Jpg, pdf2JpgFromURL
+from helper import createDocuments, assignPageNumbers, classify, pdf2JpgFromURL
 import tensorflow as tf
 from tensorflow import keras
-from Document import MyCustomDocumentEncoder, MyCustomFileEncoder
+from Document import MyCustomFileEncoder
 import sys
 import os
 
@@ -10,23 +10,16 @@ print("keras version: {}".format(keras.__version__))
 print("tensorflow version: {}".format(tf.__version__))
 print("python version: {}".format(sys.version))
 
-
 # classes
 classes = ['BMO Bank', 'BMO Credit', 'CIBC Bank', 'CIBC Credit', 'RBC Bank', 'RBC Credit', 'Scotia Bank', 'Scotia Credit', 'TD Bank', 'TD Credit']
 
 # load model 
 print("\n\nloading model...")
 model = tf.keras.models.load_model(os.getenv('MODEL_URL'))    
-
-# Load your SavedModel
-# saved_model_path = '/home/roland/models_2024/bigBanks_2024-05-02_9am.keras'  # Update with your actual path
-# model = tf.keras.layers.TFSMLayer(saved_model_path, call_endpoint='serving_default') 
-# model = tf.keras.models.load_model('/home/roland/Downloads/bigBanks_2024-05-02_9am.keras')  
 model.summary()
-print('model loaded\n\n')
 
 
-def workflow(pdf_path= "./rb4.pdf", file_id: str = "file_id"):
+def workflow(pdf_path, file_id: str = "file_id"):
     # image2pdf
     print('converting pdf to image...')
     images = pdf2JpgFromURL(pdf_path)

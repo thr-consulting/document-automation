@@ -13,7 +13,7 @@ import urllib
 print("\npytesseract version: {}\n".format(pytesseract.get_tesseract_version()))
 
 
-# Open the URL
+# url pdf to jpeg
 def pdf2JpgFromURL(url: str):
     # download pdf
     with urllib.request.urlopen(url) as response:
@@ -26,7 +26,7 @@ def pdf2JpgFromURL(url: str):
         # return as numpy array
         return [np.array(image) for image in images]
 
-
+# file pdf to jpeg
 def pdf2Jpg(pdf_path):
     images = convert_from_path(pdf_path)
     
@@ -52,8 +52,6 @@ def processPageRegex(pageRegex: PageRegex, txt):
 
 
 def extractText(image, extract: Coordinate):
-    # image = cv2.imread(filepath)
-
     # Crop the image
     h, w, c = image.shape
     x = int(extract.x * w)
@@ -62,10 +60,6 @@ def extractText(image, extract: Coordinate):
     h = int(y + extract.h * h)
     cropped_image = image[y:h, x:w]
 
-    # cv2.imshow("cropped", cropped_image)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-
     # Perform OCR on the cropped image
     text = pytesseract.image_to_string(cropped_image)
     print("extracted text: {}".format(text))
@@ -73,7 +67,7 @@ def extractText(image, extract: Coordinate):
     # Return the extracted text
     return text
 
-
+# assign page number to a single page
 def assignVendorPageNumber(page: PageResult, image, className: str):
     # get layout
     layout = getLayout(className)
@@ -82,7 +76,6 @@ def assignVendorPageNumber(page: PageResult, image, className: str):
     if layout:
         for l in layout.pageNumber:
             txt = extractText(image, l)
-            print("extracted txt: {}".format(txt))
 
             # get actual page number
             if len(txt) > 0:
@@ -95,7 +88,7 @@ def assignVendorPageNumber(page: PageResult, image, className: str):
                 if p_num != -1:
                     break
 
-
+# assign page numbers to all pages
 def assignPageNumbers(results: list[PageResult], images):
     assert len(results) > 0
     print("assign page number len: {}".format(len(results)))

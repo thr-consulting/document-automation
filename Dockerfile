@@ -15,8 +15,5 @@ RUN pip install -r /app/requirements.txt
 # Copy your application code
 COPY . /app
 
-# Run api
-# CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "80"]
-
 # Run queue
-CMD ["python", "workerBullMq.py"]
+CMD ["python", "worker.py"]
