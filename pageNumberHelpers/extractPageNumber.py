@@ -1,7 +1,8 @@
 import re
-from PageResult import PageResult
-from helper import extractText
-from layouts import PageRegex, getLayout
+
+from data.layouts import PageRegex, getLayout
+from models.PageResult import PageResult
+from ocr.extract import extractText
 
 
 def processPageRegex(pageRegex: PageRegex, txt):
@@ -20,6 +21,7 @@ def processPageRegex(pageRegex: PageRegex, txt):
             )
 
     return (-1, -1)
+
 
 # assign page number to a single page
 def assignVendorPageNumber(page: PageResult, image, className: str):
@@ -41,6 +43,7 @@ def assignVendorPageNumber(page: PageResult, image, className: str):
                 # break once page number is found
                 if p_num != -1:
                     break
+
 
 # assign page numbers to all pages
 def assignPageNumbers(results: list[PageResult], images):

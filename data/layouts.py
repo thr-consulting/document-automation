@@ -1,11 +1,3 @@
-class Coordinate:
-    def __init__(self, pageNumber: int, x: float, y: float, w: float, h: float):
-        self.pageNumber: int = pageNumber
-        self.x: int = x
-        self.y: int = y
-        self.w: int = w
-        self.h: int = h
-        
 class PageRegex:
     def __init__(self, general, pagePosition: int, pageOfPosition: int):
         self.general = general
@@ -20,24 +12,35 @@ class DateRegex:
         self.yearPosition: int = yearPosition
         self.generalPosition: int = generalPosition
         
+class Coordinate:
+    def __init__(self, pageNumber: int, x: float, y: float, w: float, h: float):
+        self.pageNumber: int = pageNumber
+        self.x: int = x
+        self.y: int = y
+        self.w: int = w
+        self.h: int = h
+
+
 class PageCoordinate(Coordinate):
-    def __init__(self, pageNumber, regex: PageRegex, x: float, y: float, w: float, h: float):
+    def __init__(
+        self, pageNumber, regex: PageRegex, x: float, y: float, w: float, h: float
+    ):
+        super().__init__(pageNumber, x, y, w, h)
+        self.regex = regex
+
+
+class DateCoordinate(Coordinate):
+    def __init__(
+        self, pageNumber: int, regex: DateRegex, x: float, y: float, w: float, h: float
+    ):
         super().__init__(pageNumber, x, y, w, h)
         self.regex = regex
         
-
-class DateCoordinate(Coordinate):
-    def __init__(self, pageNumber: int, regex: DateRegex, x: float, y: float, w: float, h: float):
-        super().__init__(pageNumber, x, y, w, h)
-        self.regex = regex
-
-
 class Layout:
     def __init__(self, class_name: str, pageNumber: list[PageCoordinate], date: list[DateCoordinate]):
         self.className: str = class_name
         self.pageNumber: list[PageCoordinate] = pageNumber
         self.date: list[DateCoordinate] = date
-
 
 dd_of_dd = PageRegex(r"(\d+)\s*(of|Of|0f|oF|OF|0F)\s*(\d+)", 1, 3)
 mmmm_dd_yyyy = DateRegex(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})", 2, 2, 1, 3)

@@ -1,5 +1,4 @@
 import cv2
-from layouts import Coordinate, Layout, PageCoordinate
 
 
 start_point = None

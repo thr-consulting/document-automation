@@ -1,16 +1,19 @@
 import json
-from helper import createDocuments, classify, pdf2JpgFromURL
+from documentBuilder.build import createDocuments
+from images.pdf2jpg import pdf2JpgFromURL
+from models.MLFile import MyCustomFileEncoder
+from predict import  classify
 import tensorflow as tf
 from tensorflow import keras
-from Document import MyCustomFileEncoder
 import sys
 import os
 
 from pageNumberHelpers.extractPageNumber import assignPageNumbers
-
+print('\n\n-----')
 print("keras version: {}".format(keras.__version__))
 print("tensorflow version: {}".format(tf.__version__))
 print("python version: {}".format(sys.version))
+print('-----\n')
 
 # classes
 classes = ['BMO Bank', 'BMO Credit', 'CIBC Bank', 'CIBC Credit', 'RBC Bank', 'RBC Credit', 'Scotia Bank', 'Scotia Credit', 'TD Bank', 'TD Credit']
@@ -43,6 +46,10 @@ def workflow(pdf_path, file_id: str = "file_id"):
     for i in mlFile.documents:
         print(i.className, i.date, i.pages)
         
-    # return as json
-    print("returning json object: {}".format(json.dumps(mlFile, cls=MyCustomFileEncoder)))
-    return json.dumps(mlFile, cls=MyCustomFileEncoder)
+    
+    if mlFile.allSorted:
+        # return as json
+        print("returning json object: {}".format(json.dumps(mlFile, cls=MyCustomFileEncoder)))
+        return json.dumps(mlFile, cls=MyCustomFileEncoder)
+    
+    return None
