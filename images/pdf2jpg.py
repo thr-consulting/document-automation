@@ -13,6 +13,7 @@ def pdf2JpgFromURL(url: str):
         # convert to jpeg
         images = convert_from_bytes(pdf_content)
         
+        print(len(images))
         # return as numpy array
         return [np.array(image) for image in images]
 

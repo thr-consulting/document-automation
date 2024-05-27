@@ -22,7 +22,7 @@ async def doSomethingAsync(job, job_token):
 
 async def main():
     print("Waiting for jobs")
-    Worker("sortPDFQueue", doSomethingAsync, {"connection": os.getenv('REDIS_URL'), "prefix": "tacs"})
+    Worker("sortFileQueue", doSomethingAsync, {"connection": os.getenv('REDIS_URL'), "prefix": "tacs"})
 
     while True:
         await asyncio.sleep(1)

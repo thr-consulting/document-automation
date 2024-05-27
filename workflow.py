@@ -1,7 +1,6 @@
-import json
 from documentBuilder.build import createDocuments
 from images.pdf2jpg import pdf2JpgFromURL
-from models.MLFile import MyCustomFileEncoder
+from models.MLFile import convert_to_json
 from predict import classify
 import tensorflow as tf
 from tensorflow import keras
@@ -63,12 +62,8 @@ def workflow(pdf_path, file_id: str = "file_id"):
         print(i.className, i.date, i.pages)
 
     if mlFile.allSorted:
-        # return as json
-        print(
-            "returning json object: {}".format(
-                json.dumps(mlFile, cls=MyCustomFileEncoder)
-            )
-        )
-        return json.dumps(mlFile, cls=MyCustomFileEncoder)
+        json = convert_to_json(mlFile)
+        print("json: {}".format(json))
+        return json
 
     return None
