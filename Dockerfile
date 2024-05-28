@@ -6,6 +6,8 @@ RUN mkdir -p /usr/share/man/man1 && \
 
 WORKDIR /app
 
+RUN mkdir /models
+
 # Copy your Python packages
 COPY requirements.txt /app/requirements.txt
 
