@@ -17,18 +17,29 @@ print("-----\n")
 
 # classes
 classes = [
+    "*_MB_Credit_Union_Lines",
+    "Access Bank",
+    "Assiniboine Bank",
     "BMO Bank",
     "BMO Credit",
     "CIBC Bank",
     "CIBC Credit",
+    "Caisse Bank",
+    "Cheque",
+    "MBNA Credit",
+    "Niverville Bank",
+    "Noventis Bank",
     "RBC Bank",
     "RBC Credit",
+    "RCU Bank",
+    "SCU Bank",
     "Scotia Bank",
     "Scotia Credit",
+    "Stride Bank",
+    "Sunova Bank",
     "TD Bank",
     "TD Credit",
 ]
-
 # load model
 print("\n\nloading model...")
 model = tf.keras.models.load_model(os.getenv("MODEL_URL"))
