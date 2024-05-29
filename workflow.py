@@ -8,6 +8,8 @@ import sys
 import os
 
 from pageNumberHelpers.extractPageNumber import assignPageNumbers
+from dotenv import load_dotenv
+load_dotenv()
 
 print("\n\n-----")
 print("keras version: {}".format(keras.__version__))

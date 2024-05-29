@@ -3,6 +3,7 @@ import re
 from data.layouts import DateRegex, Layout, getLayout
 from ocr.extract import extractText
 
+
 def getRegexDate(txt: str, regex: DateRegex) -> date:
     months = [
         "jan",
@@ -25,10 +26,16 @@ def getRegexDate(txt: str, regex: DateRegex) -> date:
         print("general match: {}".format(general))
 
         extracted_day = int(general[regex.dayPosition - 1])
-        extracted_month = months.index(general[regex.monthPosition - 1].lower()) + 1
+        
+        if len(general[regex.monthPosition - 1]) == 2:
+            extracted_month = int(general[regex.monthPosition - 1])
+        else:
+            extracted_month = months.index(general[regex.monthPosition - 1].lower()) + 1
+            
         extracted_year = int(general[regex.yearPosition - 1])
         if extracted_year < 2000:
             extracted_year = extracted_year + 2000
+            
         print(
             "date: {}".format(
                 date(extracted_year, extracted_month, extracted_day).isoformat()
@@ -38,13 +45,14 @@ def getRegexDate(txt: str, regex: DateRegex) -> date:
         return date(extracted_year, extracted_month, extracted_day)
     return None
 
+
 def extractDate(className: str, images) -> date:
     print("extracting date...")
-    
+
     # get layout
     layout: Layout = getLayout(className)
     if layout:
-        print('FOUND layout for className: {}'.format(className))
+        print("FOUND layout for className: {}".format(className))
         # get which page to extract date from
         page = layout.date[0].pageNumber
 
@@ -53,8 +61,8 @@ def extractDate(className: str, images) -> date:
 
         # get actual date with regex
         date = getRegexDate(txt, layout.date[0].regex)
-        
+
         return date
     else:
-        print('FAILED to find layout for className: {}'. format(className))
+        print("FAILED to find layout for className: {}".format(className))
         return None
