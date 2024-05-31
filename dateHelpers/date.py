@@ -27,7 +27,9 @@ def getRegexDate(txt: str, regex: DateRegex) -> date:
 
         extracted_day = int(general[regex.dayPosition - 1])
         
-        if len(general[regex.monthPosition - 1]) == 2:
+        monthLength = len(general[regex.monthPosition - 1])
+        print("month length: {}".format(monthLength))
+        if monthLength == 1 or monthLength == 2:
             extracted_month = int(general[regex.monthPosition - 1])
         else:
             extracted_month = months.index(general[regex.monthPosition - 1].lower()) + 1
@@ -43,6 +45,7 @@ def getRegexDate(txt: str, regex: DateRegex) -> date:
         )
 
         return date(extracted_year, extracted_month, extracted_day)
+    print("no general match for date regex")
     return None
 
 

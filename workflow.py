@@ -83,11 +83,12 @@ def workflow(pdf_path, file_id: str = "file_id"):
     results = classify(model, images, classes)
 
     # assign page numbers
-    print("assigning page numbers...")
+    print("\nassigning page numbers...")
     assignPageNumbers(results, images)
-    print("after assignPageNumbers")
+    print("\nafter assignPageNumbers...")
     for result in results:
         print("{} {} {}".format(result.className, result.predictScore, result.predictedPageNum))
+    print("-------------\n")
 
     # create document(s)
     print("creating documents...")
