@@ -9,6 +9,7 @@ import os
 
 from pageNumberHelpers.extractPageNumber import assignPageNumbers
 from dotenv import load_dotenv
+
 load_dotenv()
 
 print("\n\n-----")
@@ -20,28 +21,47 @@ print("-----\n")
 # classes
 classes = [
     "*_MB_Credit_Union_Lines",
+    "ATT",
     "Access Bank",
     "Assiniboine Bank",
     "BMO Bank",
     "BMO Credit",
+    "Bell",
+    "Big Freight",
     "CIBC Bank",
     "CIBC Credit",
     "Caisse Bank",
+    "Canadian Tire Credit",
     "Cheque",
+    "DeckX",
+    "Empty Page",
+    "Enbridge",
+    "Enmax",
+    "Fido",
+    "Koodo",
+    "MB Hydro",
     "MBNA Credit",
     "Niverville Bank",
     "Noventis Bank",
     "RBC Bank",
     "RBC Credit",
     "RCU Bank",
+    "Rogers",
     "SCU Bank",
     "Scotia Bank",
     "Scotia Credit",
+    "Shaw",
     "Stride Bank",
     "Sunova Bank",
     "TD Bank",
     "TD Credit",
+    "Telus",
+    "TransX",
+    "Verizon",
+    "Vivint",
+    "Wpg Water Waste Department",
 ]
+
 # load model
 print("\n\nloading model...")
 model = tf.keras.models.load_model(os.getenv("MODEL_URL"))
@@ -65,6 +85,9 @@ def workflow(pdf_path, file_id: str = "file_id"):
     # assign page numbers
     print("assigning page numbers...")
     assignPageNumbers(results, images)
+    print("after assignPageNumbers")
+    for result in results:
+        print("{} {} {}".format(result.className, result.predictScore, result.predictedPageNum))
 
     # create document(s)
     print("creating documents...")

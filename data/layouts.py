@@ -42,7 +42,8 @@ class Layout:
         self.pageNumber: list[PageCoordinate] = pageNumber
         self.date: list[DateCoordinate] = date
 
-dd_of_dd = PageRegex(r"(\d+)\s*(of|Of|0f|oF|OF|0F)\s*(\d+)", 1, 3)
+page_of_total = PageRegex(r"(\d+)\s*(of|Of|0f|oF|OF|0F)\s*(\d+)", 1, 3)
+page_number = PageRegex(r"(\d+)", 1, 0)
 mmmm_dd_yyyy = DateRegex(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})", 2, 2, 1, 3)
 mmm_dd_yy = DateRegex(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{2})", 2, 2, 1, 3)
 
@@ -53,7 +54,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.6698039215686274,
                 0.3496969696969697,
                 0.23215686274509803,
@@ -61,7 +62,7 @@ layouts = [
             ),
             PageCoordinate(
                 2,
-                dd_of_dd,
+                page_of_total,
                 0.792156862745098, 0.06424242424242424, 0.19215686274509805, 0.04181818181818182
             )
         ],
@@ -76,7 +77,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.054901960784313725,
                 0.8957575757575758,
                 0.19294117647058823,
@@ -99,7 +100,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8094117647058824,
                 0.9503030303030303,
                 0.1592156862745098,
@@ -122,7 +123,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.9003921568627451,
                 0.8703030303030304,
                 0.08941176470588236,
@@ -145,7 +146,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8862745098039215,
                 0.9218181818181819,
                 0.1003921568627451,
@@ -165,7 +166,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.5121568627450981,
                 0.15212121212121213,
                 0.06588235294117648,
@@ -185,12 +186,12 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.486328125, 0.15625, 0.08984375, 0.025390625
             ),
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.2196078431372549, 0.004242424242424243, 0.6149019607843137, 0.04787878787878788
             )
         ],
@@ -207,12 +208,12 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.876078431372549, 0.052121212121212124, 0.09333333333333334, 0.01575757575757576
             ),
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.832156862745098, 0.052121212121212124, 0.06352941176470588, 0.017575757575757574
             )
         ],
@@ -229,7 +230,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8047058823529412, 0.9175757575757576, 0.17490196078431372, 0.03939393939393939
             ),
         ],
@@ -246,7 +247,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8047058823529412, 0.9175757575757576, 0.17490196078431372, 0.03939393939393939
             ),
         ],
@@ -263,7 +264,7 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8047058823529412, 0.9175757575757576, 0.17490196078431372, 0.03939393939393939
             ),
         ],
@@ -280,7 +281,41 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
+                0.8047058823529412, 0.9175757575757576, 0.17490196078431372, 0.03939393939393939
+            ),
+        ],
+        [
+            DateCoordinate(
+                1,
+                DateRegex(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})", 2, 2, 1, 3), 
+                0.01803921568627451, 0.09757575757575758, 0.5341176470588235, 0.01818181818181818
+            )
+        ],
+    ),
+    Layout(
+        "Stride Bank",
+        [
+            PageCoordinate(
+                1,
+                page_of_total,
+                0.8047058823529412, 0.9175757575757576, 0.17490196078431372, 0.03939393939393939
+            ),
+        ],
+        [
+            DateCoordinate(
+                1,
+                DateRegex(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})", 2, 2, 1, 3), 
+                0.01803921568627451, 0.09757575757575758, 0.5341176470588235, 0.01818181818181818
+            )
+        ],
+    ),
+    Layout(
+        "Niverville Bank",
+        [
+            PageCoordinate(
+                1,
+                page_of_total,
                 0.8047058823529412, 0.9175757575757576, 0.17490196078431372, 0.03939393939393939
             ),
         ],
@@ -297,12 +332,12 @@ layouts = [
         [
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8818466353677621, 0.7103030303030303, 0.11189358372456965, 0.019393939393939394
             ),
             PageCoordinate(
                 1,
-                dd_of_dd,
+                page_of_total,
                 0.8649921507064364, 0.9643734643734644, 0.12637362637362637, 0.03194103194103194
             ),
         ],
@@ -311,6 +346,57 @@ layouts = [
                 1,
                 DateRegex(r"(\d\d)/(\d\d)/(\d\d)", 2, 2, 1, 3), 
                 0.690923317683881, 0.15878787878787878, 0.28012519561815336, 0.04727272727272727
+            )
+        ],
+    ),
+    Layout(
+        "Big Freight",
+        [
+            PageCoordinate(
+                1,
+                page_of_total,
+                0.8954545454545455, 0.9388235294117647, 0.09954545454545455, 0.054705882352941174
+            ),
+        ],
+        [
+            DateCoordinate(
+                1,
+                DateRegex(r"(\d\d)/(\d\d)/(\d\d\d\d)", 1, 2, 1, 3), 
+                0.37272727272727274, 0.07705882352941176, 0.2822727272727273, 0.021176470588235293
+            )
+        ],
+    ),
+    Layout(
+        "TransX",
+        [
+            PageCoordinate(
+                1,
+                page_number,
+                0.38176470588235295, 0.9063636363636364, 0.21176470588235294, 0.04863636363636364
+            ),
+        ],
+        [
+            DateCoordinate(
+                1,
+                DateRegex(r"(\d\d)/(\d\d)/(\d\d\d\d)", 1, 2, 1, 3), 
+                0.6447058823529411, 0.028181818181818183, 0.2811764705882353, 0.015454545454545455
+            )
+        ],
+    ),
+    Layout(
+        "DeckX",
+        [
+            PageCoordinate(
+                1,
+                page_number,
+                0.38176470588235295, 0.9063636363636364, 0.21176470588235294, 0.04863636363636364
+            ),
+        ],
+        [
+            DateCoordinate(
+                1,
+                DateRegex(r"(\d\d)/(\d\d)/(\d\d\d\d)", 1, 2, 1, 3), 
+                0.6447058823529411, 0.028181818181818183, 0.2811764705882353, 0.015454545454545455
             )
         ],
     ),

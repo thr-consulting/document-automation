@@ -10,8 +10,13 @@ def processPageRegex(pageRegex: PageRegex, txt):
         general = re.findall(pageRegex.general, txt)
         if len(general):
             general = general[0]
-            print(general)
-            return (
+            print("general page: {}".format(general))
+            if pageRegex.pageOfPosition == 0:
+                # total pages does not exist
+                return (int(general[pageRegex.pagePosition - 1]), -1) 
+            else:
+                # get both page number and total pages
+                return (
                 int(general[pageRegex.pagePosition - 1]),
                 (
                     general[pageRegex.pageOfPosition - 1]
@@ -50,14 +55,15 @@ def assignPageNumbers(results: list[PageResult], images):
     assert len(results) > 0
     print("assign page number len: {}".format(len(results)))
     for p in range(len(results)):
-        assignVendorPageNumber(results[p], images[p], results[p].className)
-
-        # if previous vendor is different, use that to find page number
-        if (
-            results[p].predictedPageNum == -1
-            and p > 0
-            and results[p].className != results[p - 1].className
-        ):
+        # step 1: assume page 2 or greater is the same className as the previous page, so use previous class layout
+        if p > 0:
             assignVendorPageNumber(results[p], images[p], results[p - 1].className)
+        else:
+            assignVendorPageNumber(results[p], images[p], results[p].className)
+
+        # if current page number is valid then current className is same as previous className
+        if results[p].predictedPageNum > 1:
             results[p].className = results[p - 1].className
             results[p].predictScore = 0
+
+        # step 2: current page is different than previous page
