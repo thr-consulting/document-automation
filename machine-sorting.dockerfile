@@ -1,12 +1,14 @@
 FROM python:3.10
+MAINTAINER THR Consulting <it@makingyourmilescount.com>
 
 RUN mkdir -p /usr/share/man/man1 && \
     apt-get update && \
     apt-get install -yq nano poppler-utils tesseract-ocr
 
-WORKDIR /app
+RUN mkdir -p /app
+RUN mkdir -p /models
 
-RUN mkdir /models
+WORKDIR /app
 
 # Copy your Python packages
 COPY requirements.txt /app/requirements.txt
