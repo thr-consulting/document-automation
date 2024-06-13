@@ -75,6 +75,6 @@ def get_coordinates_from_image(image_path):
 
 
 # Example usage
-image_path = "/home/roland/dataset_2024/jpg_original/Scotia Credit/scotiaCC96-2.jpg"
+image_path = "/home/roland/workspace/dataset_2024/jpg_original/RBC Bank/rb15-1.jpg"
 
 get_coordinates_from_image(image_path)

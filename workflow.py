@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 # to make sure it only uses a cpu
 os.environ["CUDA_VISIBLE_DEVICES"]="-1"
 
-load_dotenv(".env")
+# load_dotenv(".env")
 MODEL_PATH = os.environ["MODEL_PATH"]
 print("model path: {}".format(MODEL_PATH))
 
@@ -52,7 +52,7 @@ def workflow(pdf_path, file_id: str = "file_id"):
     assignPageNumbers(results, images)
     print("\nafter assignPageNumbers...")
     for result in results:
-        print("{} {} {}".format(result.className, result.predictScore, result.predictedPageNum))
+        print("{} -- {} -- {}".format(result.className, result.predictScore, result.predictedPageNum))
     print("-------------\n")
 
     # create document(s)
