@@ -6,11 +6,16 @@ import tensorflow as tf
 from tensorflow import keras
 import sys
 import os
-
+import json
 from pageNumberHelpers.extractPageNumber import assignPageNumbers
 from dotenv import load_dotenv
 
-load_dotenv()
+# to make sure it only uses a cpu
+os.environ["CUDA_VISIBLE_DEVICES"]="-1"
+
+load_dotenv(".env")
+MODEL_PATH = os.environ["MODEL_PATH"]
+print("model path: {}".format(MODEL_PATH))
 
 print("\n\n-----")
 print("keras version: {}".format(keras.__version__))
@@ -19,76 +24,14 @@ print("python version: {}".format(sys.version))
 print("-----\n")
 
 # classes
-classes = [
-    "*_MB_Credit_Union_Lines",
-    "ATT",
-    "Access Bank",
-    "Assiniboine Bank",
-    "BMO Bank",
-    "BMO Credit",
-    "BVT",
-    "Beaver",
-    "Bell",
-    "Big Freight",
-    "Bison",
-    "CAT Scale",
-    "CIBC Bank",
-    "CIBC Credit",
-    "Caisse Bank",
-    "Cambrian Bank",
-    "Canadian Tire Credit",
-    "Cheque",
-    "Custom Transport",
-    "DeckX",
-    "Emax",
-    "Empty Page",
-    "Enbridge",
-    "Enmax",
-    "Epcor",
-    "Fido",
-    "FlyingJ",
-    "Geotab",
-    "High Speed Crow",
-    "Koodo",
-    "MB Hydro",
-    "MBNA Credit",
-    "Niverville Bank",
-    "Noventis Bank",
-    "PBX",
-    "Penner International",
-    "Plainsview Bank",
-    "PrePass",
-    "RBC Bank",
-    "RBC Credit",
-    "RCU Bank",
-    "Rogers",
-    "SCU Bank",
-    "Scotia Bank",
-    "Scotia Credit",
-    "Searcy",
-    "Shaw",
-    "Steves Livestock",
-    "Stride Bank",
-    "Sunova Bank",
-    "Sunrise Bank",
-    "TD Bank",
-    "TD Credit",
-    "Telus",
-    "TransX",
-    "Valley Fiber",
-    "Verizon",
-    "Vivint",
-    "Westoba Bank",
-    "Wpg Water Waste Department",
-    "tBaytel",
-    "xplornet",
-]
+classes = json.load(open('classes.json'))
+print(classes)
 
 # load model
 print("\n\nloading model...")
-model = tf.keras.models.load_model(os.getenv("MODEL_URL"))
+model = tf.keras.models.load_model(MODEL_PATH)
 model.summary()
-
+print("input shape: {}: ".format(model.input_shape))
 
 def workflow(pdf_path, file_id: str = "file_id"):
     # image2pdf

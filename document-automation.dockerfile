@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.11.2
 MAINTAINER THR Consulting <it@makingyourmilescount.com>
 
 RUN mkdir -p /usr/share/man/man1 && \

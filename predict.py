@@ -4,13 +4,14 @@ import tensorflow as tf
 
 def classify(model, images, classes: list[str]):
     print("images len: {}".format(len(images)))
+    width = model.input_shape[1]
 
     # Create a NumPy array with consistent shape
-    image_array = np.zeros((len(images), 384, 384, 3), dtype=np.uint8)
+    image_array = np.zeros((len(images), width, width, 3), dtype=np.uint8)
 
     # Fill the array with image data
     for i, img in enumerate(images):
-        image_array[i, :384, :384, :] = tf.image.resize(np.array(img), (384, 384))
+        image_array[i, :width, :width, :] = tf.image.resize(np.array(img), (width, width))
 
     scores = model.predict(image_array)
     max_index = np.argmax(scores, axis=1)
