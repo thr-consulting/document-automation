@@ -53,7 +53,7 @@ def assignVendorPageNumber(page: PageResult, image, className: str):
 # assign page numbers to all pages
 def assignPageNumbers(results: list[PageResult], images):
     assert len(results) > 0
-    print("assign page number len: {}".format(len(results)))
+    print(f"\nassign {str(len(results))} page numbers")
     for p in range(len(results)):
         # step 1: assume page 2 or greater is the same className as the previous page, so use previous class layout
         if p > 0:
@@ -67,3 +67,7 @@ def assignPageNumbers(results: list[PageResult], images):
             results[p].predictScore = 0
 
         # step 2: current page is different than previous page
+    
+    for result in results:
+        print("{} -- {} -- {}".format(result.className, result.predictScore, result.predictedPageNum))
+    print("-------------\n")

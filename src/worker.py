@@ -1,16 +1,17 @@
 import asyncio
-from bullmq import Worker, Queue 
 import os
-from dotenv import load_dotenv
-load_dotenv() 
 
+from bullmq import Worker, Queue 
 from workflow import workflow
+from dotenv import load_dotenv
+
+load_dotenv() 
 
 async def doSomethingAsync(job, job_token):
     print("\n---\nreceived job: {}".format(job.id))
     print("job name: {}".format(job.name))
     print("job data: {}".format(job.data))
-    result = 'hello ' + str(job.data)
+    
     result = workflow(job.data['url'], job.data['id'])
     if result:
         queue = Queue('processorQueue', {"connection": os.getenv('REDIS_URL'), "prefix": "tacs", "removeOnComplete": True})

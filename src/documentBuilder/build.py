@@ -64,6 +64,7 @@ def allSameVendor(results: list[PageResult]):
 
 
 def createDocuments(results: list[PageResult], images, fileId: str) -> MLFile:
+    print("creating documents...")
     file: MLFile = MLFile(fileId)
     file.documents = []
 
@@ -103,5 +104,10 @@ def createDocuments(results: list[PageResult], images, fileId: str) -> MLFile:
                 file.documents.append(
                     MLDocument(results[0].className, pageNumbers, date)
                 )
+    
+    print("\n---\nfile id: {}".format(file.id))
+    print(f"\n---\nall pages sorted: {file.allSorted}\n---")
+    for i in file.documents:
+        print(i.className, i.date, i.pages)
 
     return file

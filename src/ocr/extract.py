@@ -1,6 +1,6 @@
 from data.layouts import Coordinate
 import pytesseract
-print("\npytesseract version: {}\n".format(pytesseract.get_tesseract_version()))
+print("pytesseract version: {}".format(pytesseract.get_tesseract_version()))
 
 def extractText(image, extract: Coordinate):
     # Crop the image

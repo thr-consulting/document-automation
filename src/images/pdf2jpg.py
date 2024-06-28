@@ -5,7 +5,8 @@ from pdf2image import convert_from_path, convert_from_bytes
 
 # url pdf to jpeg
 def pdf2JpgFromURL(url: str):
-    # download pdf
+    print("download pdf from url...")
+    
     with urllib.request.urlopen(url) as response:
         # Read the PDF content
         pdf_content = response.read()
