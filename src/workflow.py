@@ -14,14 +14,17 @@ load_dotenv()
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1" # run on cpu
 
 MODEL_PATH = os.environ["MODEL_PATH"]
+MODEL_IMAGE_SIZE = int(os.environ["MODEL_IMAGE_SIZE"])
+MODEL_CLASSES_PATH = os.environ["MODEL_CLASSES_PATH"]
+
 print(f"pytorch version: {torch.__version__}\n")
 # classes
-classes = json.load(open("classes.json"))
+classes = json.load(open(MODEL_CLASSES_PATH))
 print(f"{len(classes)} classes")
 
 # load model
 device = torch.device("cpu")
-model, transform = load_model(MODEL_PATH, classes, 416, device)
+model, transform = load_model(MODEL_PATH, classes, MODEL_IMAGE_SIZE, device)
 
 
 def workflow(pdf_path, file_id: str = "file_id"):

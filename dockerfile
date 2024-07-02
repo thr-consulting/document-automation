@@ -21,4 +21,4 @@ RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/c
 COPY . /app
 
 # Run queue
-CMD ["python", "worker.py"]
+CMD ["python", "./src/worker.py"]
