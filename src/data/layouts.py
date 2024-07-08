@@ -1,6 +1,6 @@
 class PageRegex:
-    def __init__(self, general, pagePosition: int, pageOfPosition: int):
-        self.general = general
+    def __init__(self, generalRegex, pagePosition: int, pageOfPosition: int):
+        self.generalRegex = generalRegex
         self.pagePosition: int = pagePosition
         self.pageOfPosition: int = pageOfPosition
 
@@ -14,7 +14,7 @@ class DateRegex:
         monthPosition: int,
         yearPosition: int,
     ):
-        self.general_regex = generalRegex
+        self.generalRegex = generalRegex
         self.dayPosition: int = dayPosition
         self.monthPosition: int = monthPosition
         self.yearPosition: int = yearPosition

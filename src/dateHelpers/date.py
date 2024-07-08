@@ -25,6 +25,7 @@ def txtToMonth(general: str, regex: DateRegex) -> int:
     ]
     monthLength = len(general[regex.monthPosition - 1])
     print("month length: {}".format(monthLength))
+
     if monthLength == 1 or monthLength == 2:
         return int(general[regex.monthPosition - 1])
     else:
@@ -40,7 +41,7 @@ def txtToYear(general: str, regex: DateRegex) -> int:
 
 
 def txtToDate(txt: str, regex: DateRegex) -> date:
-    general = re.findall(regex.general_regex, txt, flags=re.IGNORECASE)
+    general = re.findall(regex.generalRegex, txt, flags=re.IGNORECASE)
     print(general)
 
     if len(general) >= regex.generalPosition:

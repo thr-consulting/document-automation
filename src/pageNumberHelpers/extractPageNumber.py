@@ -5,12 +5,13 @@ from models.PageResult import PageResult
 from ocr.extract import extractText
 
 
-def processPageRegex(pageRegex: PageRegex, txt):
+def txtToPageNumber(pageRegex: PageRegex, txt):
     if len(txt) > 0:
-        general = re.findall(pageRegex.general, txt)
+        general = re.findall(pageRegex.generalRegex, txt)
         if len(general):
             general = general[0]
             print("general page: {}".format(general))
+            
             if pageRegex.pageOfPosition == 0:
                 # total pages does not exist
                 return (int(general[pageRegex.pagePosition - 1]), -1) 
@@ -29,7 +30,7 @@ def processPageRegex(pageRegex: PageRegex, txt):
 
 
 # assign page number to a single page
-def assignVendorPageNumber(page: PageResult, image, className: str):
+def extractPageNumber(page: PageResult, image, className: str):
     # get layout
     layout = getLayout(className)
 
@@ -39,8 +40,8 @@ def assignVendorPageNumber(page: PageResult, image, className: str):
             txt = extractText(image, l)
 
             # get actual page number
-            if len(txt) > 0:
-                p_num, p_of = processPageRegex(l.regex, txt)
+            if len(txt):
+                p_num, p_of = txtToPageNumber(l.regex, txt)
 
                 page.predictedPageNum = p_num
                 page.predictedPageNumOf = p_of
@@ -57,9 +58,9 @@ def assignPageNumbers(results: list[PageResult], images):
     for p in range(len(results)):
         # step 1: assume page 2 or greater is the same className as the previous page, so use previous class layout
         if p > 0:
-            assignVendorPageNumber(results[p], images[p], results[p - 1].className)
+            extractPageNumber(results[p], images[p], results[p - 1].className)
         else:
-            assignVendorPageNumber(results[p], images[p], results[p].className)
+            extractPageNumber(results[p], images[p], results[p].className)
 
         # if current page number is valid then current className is same as previous className
         if results[p].predictedPageNum > 1:
