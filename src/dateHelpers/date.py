@@ -54,9 +54,9 @@ def txtToDate(txt: str, regex: DateRegex) -> date:
 
         extracted_date = date(
             extracted_year, extracted_month, extracted_day
-        ).isoformat()
+        )
 
-        print(f"date: {extracted_date}")
+        print(f"date: {extracted_date.isoformat()}")
         return extracted_date
 
     print("no general match for date regex")
