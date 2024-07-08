@@ -17,4 +17,4 @@ RUN pip install -r /app/document-automation/requirements.txt
 RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
 # Run queue
-CMD ["python", "/app/document-automation/worker.py"]
+CMD ["python", "-u", "/app/document-automation/src/worker.py"]
