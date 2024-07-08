@@ -4,7 +4,11 @@ from data.layouts import DateRegex, Layout, getLayout
 from ocr.extract import extractText
 
 
-def getRegexDate(txt: str, regex: DateRegex) -> date:
+def txtToDay(general: str, regex: DateRegex) -> int:
+    return int(general[regex.dayPosition - 1])
+
+
+def txtToMonth(general: str, regex: DateRegex) -> int:
     months = [
         "jan",
         "feb",
@@ -19,38 +23,47 @@ def getRegexDate(txt: str, regex: DateRegex) -> date:
         "nov",
         "dec",
     ]
+    monthLength = len(general[regex.monthPosition - 1])
+    print("month length: {}".format(monthLength))
+    if monthLength == 1 or monthLength == 2:
+        return int(general[regex.monthPosition - 1])
+    else:
+        return months.index(general[regex.monthPosition - 1].lower()) + 1
+
+
+def txtToYear(general: str, regex: DateRegex) -> int:
+    extracted_year = int(general[regex.yearPosition - 1])
+    if extracted_year < 2000:
+        extracted_year = extracted_year + 2000
+
+    return extracted_year
+
+
+def txtToDate(txt: str, regex: DateRegex) -> date:
     general = re.findall(regex.general_regex, txt, flags=re.IGNORECASE)
     print(general)
+
     if len(general) >= regex.generalPosition:
         general = general[regex.generalPosition - 1]
         print("general match: {}".format(general))
 
-        extracted_day = int(general[regex.dayPosition - 1])
-        
-        monthLength = len(general[regex.monthPosition - 1])
-        print("month length: {}".format(monthLength))
-        if monthLength == 1 or monthLength == 2:
-            extracted_month = int(general[regex.monthPosition - 1])
-        else:
-            extracted_month = months.index(general[regex.monthPosition - 1].lower()) + 1
-            
-        extracted_year = int(general[regex.yearPosition - 1])
-        if extracted_year < 2000:
-            extracted_year = extracted_year + 2000
-            
-        print(
-            "date: {}".format(
-                date(extracted_year, extracted_month, extracted_day).isoformat()
-            )
-        )
+        extracted_day = txtToDay(general, regex)
+        extracted_month = txtToMonth(general, regex)
+        extracted_year = txtToYear(general, regex)
 
-        return date(extracted_year, extracted_month, extracted_day)
+        extracted_date = date(
+            extracted_year, extracted_month, extracted_day
+        ).isoformat()
+
+        print(f"date: {extracted_date}")
+        return extracted_date
+
     print("no general match for date regex")
     return None
 
 
 def extractDate(className: str, images) -> date:
-    print("extracting date...")
+    print("\nextracting date...")
 
     # get layout
     layout: Layout = getLayout(className)
@@ -63,7 +76,7 @@ def extractDate(className: str, images) -> date:
         txt = extractText(images[page - 1], layout.date[0])
 
         # get actual date with regex
-        date = getRegexDate(txt, layout.date[0].regex)
+        date = txtToDate(txt, layout.date[0].regex)
 
         return date
     else:
