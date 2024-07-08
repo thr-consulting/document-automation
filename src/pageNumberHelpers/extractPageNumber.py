@@ -6,25 +6,21 @@ from ocr.extract import extractText
 
 
 def txtToPageNumber(pageRegex: PageRegex, txt):
-    if len(txt) > 0:
-        general = re.findall(pageRegex.generalRegex, txt)
-        if len(general):
-            general = general[0]
-            print("general page: {}".format(general))
-            
-            if pageRegex.pageOfPosition == 0:
-                # total pages does not exist
-                return (int(general[pageRegex.pagePosition - 1]), -1) 
-            else:
-                # get both page number and total pages
-                return (
-                int(general[pageRegex.pagePosition - 1]),
-                (
-                    general[pageRegex.pageOfPosition - 1]
-                    if pageRegex.pageOfPosition > 0
-                    else -1
-                ),
-            )
+    assert(len(txt) > 0)
+
+    general = re.findall(pageRegex.generalRegex, txt)
+    if len(general):
+        general = general[0]
+        print(f"general page: {general}")
+
+        extractedPageNumber = int(general[pageRegex.pagePosition - 1])
+        extractedPageOfNumber = (
+            int(general[pageRegex.pageOfPosition - 1])
+            if pageRegex.pageOfPosition > 0
+            else -1
+        )
+
+        return (extractedPageNumber, extractedPageOfNumber)
 
     return (-1, -1)
 
@@ -55,6 +51,7 @@ def extractPageNumber(page: PageResult, image, className: str):
 def assignPageNumbers(results: list[PageResult], images):
     assert len(results) > 0
     print(f"\nassign {str(len(results))} page numbers")
+    
     for p in range(len(results)):
         # step 1: assume page 2 or greater is the same className as the previous page, so use previous class layout
         if p > 0:
@@ -68,7 +65,9 @@ def assignPageNumbers(results: list[PageResult], images):
             results[p].predictScore = 0
 
         # step 2: current page is different than previous page
-    
+
     for result in results:
-        print("{} -- {} -- {}".format(result.className, result.predictScore, result.predictedPageNum))
+        print(
+            f"{result.className} -- {result.predictScore} -- {result.predictedPageNum}"
+        )
     print("-------------\n")
