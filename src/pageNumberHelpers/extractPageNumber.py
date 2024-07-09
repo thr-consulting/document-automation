@@ -26,7 +26,7 @@ def txtToPageNumber(pageRegex: PageRegex, txt):
 
 
 # assign page number to a single page
-def extractPageNumber(page: PageResult, image, className: str):
+def extractPageNumberText(page: PageResult, image, className: str):
     # get layout
     layout = getLayout(className)
 
@@ -55,9 +55,9 @@ def assignPageNumbers(results: list[PageResult], images):
     for p in range(len(results)):
         # step 1: assume page 2 or greater is the same className as the previous page, so use previous class layout
         if p > 0:
-            extractPageNumber(results[p], images[p], results[p - 1].className)
+            extractPageNumberText(results[p], images[p], results[p - 1].className)
         else:
-            extractPageNumber(results[p], images[p], results[p].className)
+            extractPageNumberText(results[p], images[p], results[p].className)
 
         # if current page number is valid then current className is same as previous className
         if results[p].predictedPageNum > 1:
