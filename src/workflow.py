@@ -18,15 +18,27 @@ MODEL_IMAGE_SIZE = int(os.environ["MODEL_IMAGE_SIZE"])
 MODEL_CLASSES_PATH = os.environ["MODEL_CLASSES_PATH"]
 
 print(f"pytorch version: {torch.__version__}\n")
+
 # classes
 print(f"classes path: {MODEL_CLASSES_PATH}")
-classes = json.load(open(MODEL_CLASSES_PATH))
-print(f"{len(classes)} classes")
+
+try:
+    classes = json.load(open(MODEL_CLASSES_PATH))
+    print(f"{len(classes)} classes\n")
+except Exception as e:
+    print("Error loading the classes file")
+    print(f"classes path: {MODEL_CLASSES_PATH}")
+    print(e)
 
 # load model
 device = torch.device("cpu")
-model, transform = load_model(MODEL_PATH, classes, MODEL_IMAGE_SIZE, device)
 
+try:
+    model, transform = load_model(MODEL_PATH, classes, MODEL_IMAGE_SIZE, device)
+except Exception as e:
+    print("Error in loading the model")
+    print(f"model path: {MODEL_PATH}")
+    print(e)
 
 def workflow(pdf_path, file_id: str = "file_id"):
     images = pdf2JpgFromURL(pdf_path)
