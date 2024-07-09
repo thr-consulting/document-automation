@@ -32,7 +32,7 @@ class Coordinate:
 
 class PageCoordinate(Coordinate):
     def __init__(
-        self, pageNumber, regex: PageRegex, x: float, y: float, w: float, h: float
+        self, pageNumber: int, regex: PageRegex, x: float, y: float, w: float, h: float
     ):
         super().__init__(pageNumber, x, y, w, h)
         self.regex = regex

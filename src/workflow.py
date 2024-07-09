@@ -19,6 +19,7 @@ MODEL_CLASSES_PATH = os.environ["MODEL_CLASSES_PATH"]
 
 print(f"pytorch version: {torch.__version__}\n")
 # classes
+print(f"classes path: {MODEL_CLASSES_PATH}")
 classes = json.load(open(MODEL_CLASSES_PATH))
 print(f"{len(classes)} classes")
 
