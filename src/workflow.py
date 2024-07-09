@@ -26,9 +26,11 @@ try:
     classes = json.load(open(MODEL_CLASSES_PATH))
     print(f"{len(classes)} classes\n")
 except Exception as e:
+    print("--")
     print("Error loading the classes file")
     print(f"classes path: {MODEL_CLASSES_PATH}")
     print(e)
+    print("--")
 
 # load model
 device = torch.device("cpu")
@@ -36,9 +38,11 @@ device = torch.device("cpu")
 try:
     model, transform = load_model(MODEL_PATH, classes, MODEL_IMAGE_SIZE, device)
 except Exception as e:
+    print("--")
     print("Error in loading the model")
     print(f"model path: {MODEL_PATH}")
     print(e)
+    print("--")
 
 def workflow(pdf_path, file_id: str = "file_id"):
     images = pdf2JpgFromURL(pdf_path)
