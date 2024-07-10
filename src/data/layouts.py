@@ -67,20 +67,19 @@ mmmm_dd_yyyy = DateRegex(
     1,
     3,
 )
-mmm_dd_yyyy = DateRegex(
-    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-    2,
+
+mmm_dd_yy = DateRegex(
+    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{2})",
+    1,
     2,
     1,
     3,
 )
 
 
-def build_mmm_dd_yyyy(
-    general_position: int, day_position: int, month_position: int, year_position: int
-):
+def build_mmm_dd_yyyy(general_position, day_position, month_position, year_position):
     return DateRegex(
-        r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{2})",
+        r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
         general_position,
         day_position,
         month_position,
@@ -505,16 +504,7 @@ layouts = [
                 1, page_of_total, 0.302734375, 0.0078125, 0.400390625, 0.0859375
             )
         ],
-        [
-            DateCoordinate(
-                1,
-                build_mmm_dd_yyyy(1, 1, 2, 3),
-                0.18359375,
-                0.015625,
-                0.509765625,
-                0.08203125,
-            )
-        ],
+        [DateCoordinate(1, build_mmm_dd_yyyy(1,1,2,3), 0.18359375, 0.015625, 0.509765625, 0.08203125)],
     ),
 ]
 
