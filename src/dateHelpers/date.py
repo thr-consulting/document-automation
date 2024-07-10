@@ -74,12 +74,18 @@ def extractDate(className: str, images) -> date:
         page = layout.date[0].pageNumber
 
         # get date text
-        txt = extractText(images[page - 1], layout.date[0])
+        for currLayout in layout.date:
+            print(f"trying layout: {currLayout.pageNumber}, {currLayout.regex}, {currLayout.x}, {currLayout.y}, {currLayout.h}, {currLayout.w}")
+            txt = extractText(images[page - 1], currLayout.date)
 
-        # get actual date with regex
-        date = txtToDate(txt, layout.date[0].regex)
+            # get actual date with regex
+            date = txtToDate(txt, currLayout.date.regex)
 
-        return date
+            if date:
+                print(f"found date: {date}")
+                return date
+        
+        return None
     else:
         print("FAILED to find layout for className: {}".format(className))
         return None
