@@ -7,8 +7,9 @@ from PIL import Image
 
 
 def load_model(model_path, class_names, size, device):
-    print("loading model...")
+    print(f"using device: {device}")
     print(f"model_path: {model_path}")
+    print("loading model...")
 
     # Define transforms for the input image
     transform = transforms.Compose(
