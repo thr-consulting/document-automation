@@ -76,6 +76,19 @@ mmm_dd_yy = DateRegex(
 )
 
 
+mb_cu_date_coordinate = DateCoordinate(
+    1,
+    mmmm_dd_yyyy,
+    0.02734375,
+    0.048828125,
+    0.59375,
+    0.119140625,
+)
+
+mb_cu_page_coordinate = PageCoordinate(
+    1, page_of_total, 0.787109375, 0.884765625, 0.1796875, 0.099609375
+)
+
 layouts = [
     Layout(
         "TD Bank",
@@ -334,172 +347,33 @@ layouts = [
     ),
     Layout(
         "SCU Bank",
-        [
-            PageCoordinate(
-                1, page_of_total, 0.787109375, 0.884765625, 0.1796875, 0.099609375
-            ),
-        ],
-        [
-            DateCoordinate(
-                1,
-                DateRegex(
-                    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-                    2,
-                    2,
-                    1,
-                    3,
-                ),
-                0.02734375,
-                0.048828125,
-                0.59375,
-                0.119140625,
-            )
-        ],
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
     ),
     Layout(
         "RCU Bank",
-        [
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.8047058823529412,
-                0.9175757575757576,
-                0.17490196078431372,
-                0.03939393939393939,
-            ),
-        ],
-        [
-            DateCoordinate(
-                1,
-                DateRegex(
-                    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-                    2,
-                    2,
-                    1,
-                    3,
-                ),
-                0.01803921568627451,
-                0.09757575757575758,
-                0.5341176470588235,
-                0.01818181818181818,
-            )
-        ],
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
     ),
     Layout(
         "Access Bank",
-        [
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.8047058823529412,
-                0.9175757575757576,
-                0.17490196078431372,
-                0.03939393939393939,
-            ),
-        ],
-        [
-            DateCoordinate(
-                1,
-                DateRegex(
-                    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-                    2,
-                    2,
-                    1,
-                    3,
-                ),
-                0.01803921568627451,
-                0.09757575757575758,
-                0.5341176470588235,
-                0.01818181818181818,
-            )
-        ],
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
     ),
     Layout(
         "Assiniboine Bank",
-        [
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.8047058823529412,
-                0.9175757575757576,
-                0.17490196078431372,
-                0.03939393939393939,
-            ),
-        ],
-        [
-            DateCoordinate(
-                1,
-                DateRegex(
-                    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-                    2,
-                    2,
-                    1,
-                    3,
-                ),
-                0.01803921568627451,
-                0.09757575757575758,
-                0.5341176470588235,
-                0.01818181818181818,
-            )
-        ],
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
     ),
     Layout(
         "Stride Bank",
-        [
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.8047058823529412,
-                0.9175757575757576,
-                0.17490196078431372,
-                0.03939393939393939,
-            ),
-        ],
-        [
-            DateCoordinate(
-                1,
-                DateRegex(
-                    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-                    2,
-                    2,
-                    1,
-                    3,
-                ),
-                0.01803921568627451,
-                0.09757575757575758,
-                0.5341176470588235,
-                0.01818181818181818,
-            )
-        ],
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
     ),
     Layout(
         "Niverville Bank",
-        [
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.8047058823529412,
-                0.9175757575757576,
-                0.17490196078431372,
-                0.03939393939393939,
-            ),
-        ],
-        [
-            DateCoordinate(
-                1,
-                DateRegex(
-                    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
-                    2,
-                    2,
-                    1,
-                    3,
-                ),
-                0.01803921568627451,
-                0.09757575757575758,
-                0.5341176470588235,
-                0.01818181818181818,
-            )
-        ],
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
     ),
     Layout(
         "MBNA Credit",
