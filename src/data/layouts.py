@@ -376,6 +376,11 @@ layouts = [
         [mb_cu_date_coordinate],
     ),
     Layout(
+        "Sunrise Bank",
+        [mb_cu_page_coordinate],
+        [mb_cu_date_coordinate],
+    ),
+    Layout(
         "MBNA Credit",
         [
             PageCoordinate(
