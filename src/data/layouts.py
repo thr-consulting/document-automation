@@ -67,6 +67,14 @@ mmmm_dd_yyyy = DateRegex(
     1,
     3,
 )
+mmm_dd_yyyy = DateRegex(
+    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
+    2,
+    2,
+    1,
+    3,
+)
+
 mmm_dd_yy = DateRegex(
     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{2})",
     2,
@@ -484,6 +492,11 @@ layouts = [
             )
         ],
     ),
+    Layout(
+        "Rogers",
+        [PageCoordinate(1, page_of_total, 0.302734375, 0.0078125, 0.400390625, 0.0859375)],
+        [DateCoordinate(1, mmm_dd_yyyy, 0.18359375, 0.015625, 0.509765625, 0.08203125)]
+        )
 ]
 
 
