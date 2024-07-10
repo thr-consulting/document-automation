@@ -4,46 +4,65 @@ from models.MLDocument import MLDocument
 from models.PageResult import PageResult
 
 
-def allIncrement(results: list[PageResult]) -> bool:
-    if len(results) == 1:
-        return results[0].predictedPageNum == 1
+def allIncrement(pageResults: list[PageResult]) -> bool:
+    if len(pageResults) == 1:
+        return pageResults[0].predictedPageNum == 1
 
-    for i in range(1, len(results)):
-        if int(results[i].predictedPageNum) != (
-            1 + int(results[i - 1].predictedPageNum)
+    for i in range(1, len(pageResults)):
+        if int(pageResults[i].predictedPageNum) != (
+            1 + int(pageResults[i - 1].predictedPageNum)
         ):
             return False
 
     return True
 
+def allIncrementWhenSorted(pageResults: list[PageResult]) -> bool:
+    pageResults = sorted(pageResults, key=lambda page: page.predictedPageNum)
+    return allIncrement(pageResults)
 
-def allSameVendor(results: list[PageResult]) -> bool:
-    if len(results) == 1:
+
+def allSameVendor(pageResults: list[PageResult]) -> bool:
+    if len(pageResults) == 1:
         return True
 
-    for i in range(1, len(results)):
-        if results[i].className != results[i - 1].className:
+    for i in range(1, len(pageResults)):
+        if pageResults[i].className != pageResults[i - 1].className:
             return False
 
     return True
 
 
-def createDocuments(results: list[PageResult], images, fileId: str) -> MLFile:
+def createDocuments(pageResults: list[PageResult], images, fileId: str) -> MLFile:
     print("creating documents...")
     file: MLFile = MLFile(fileId)
     file.documents = []
 
-    if allIncrement(results):
+    if allIncrement(pageResults):
         # pdf file == [incrementing page numbers with no exception]
         print("all pages are incrementing - no exceptions")
 
         # extract date
-        date = extractDate(results[0].className, images)
+        date = extractDate(pageResults[0].className, images)
         if date:
             file.documents.append(
                 MLDocument(
-                    results[0].className,
-                    list(range(1, len(results) + 1)),
+                    pageResults[0].className,
+                    list(range(1, len(pageResults) + 1)),
+                    date,
+                )
+            )
+            file.allSorted = True
+    
+    if allIncrementWhenSorted(pageResults):
+        print("all pages are incrementing - when sorted by page numbers")
+
+        # extract date
+        date = extractDate(pageResults[0].className, images)
+        if date:
+            file.documents.append(
+                MLDocument(
+                    pageResults[0].className,
+                    list(range(1, len(pageResults) + 1)),
                     date,
                 )
             )
