@@ -75,13 +75,17 @@ mmm_dd_yyyy = DateRegex(
     3,
 )
 
-mmm_dd_yy = DateRegex(
-    r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{2})",
-    2,
-    2,
-    1,
-    3,
-)
+
+def build_mmm_dd_yyyy(
+    general_position: int, day_position: int, month_position: int, year_position: int
+):
+    return DateRegex(
+        r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{2})",
+        general_position,
+        day_position,
+        month_position,
+        year_position,
+    )
 
 
 mb_cu_date_coordinate = DateCoordinate(
@@ -422,28 +426,30 @@ layouts = [
     Layout(
         "Big Freight",
         [
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.826171875, 0.86328125, 0.1640625, 0.125
-            ),
-            PageCoordinate(
-                1,
-                page_of_total,
-                0.0, 0.728515625, 0.12109375, 0.26171875
-            ),
+            PageCoordinate(1, page_of_total, 0.826171875, 0.86328125, 0.1640625, 0.125),
+            PageCoordinate(1, page_of_total, 0.0, 0.728515625, 0.12109375, 0.26171875),
         ],
         [
             DateCoordinate(
                 1,
-                DateRegex(r"Pay\D+Period\D{1,2}(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3),
-                0.33203125, 0.0234375, 0.419921875, 0.119140625
+                DateRegex(
+                    r"Pay\D+Period\D{1,2}(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3
+                ),
+                0.33203125,
+                0.0234375,
+                0.419921875,
+                0.119140625,
             ),
             DateCoordinate(
                 1,
-                DateRegex(r"Pay\D+Period\D{1,2}(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3),
-                0.89453125, 0.31640625, 0.103515625, 0.349609375
-            )
+                DateRegex(
+                    r"Pay\D+Period\D{1,2}(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3
+                ),
+                0.89453125,
+                0.31640625,
+                0.103515625,
+                0.349609375,
+            ),
         ],
     ),
     Layout(
@@ -494,9 +500,22 @@ layouts = [
     ),
     Layout(
         "Rogers",
-        [PageCoordinate(1, page_of_total, 0.302734375, 0.0078125, 0.400390625, 0.0859375)],
-        [DateCoordinate(1, mmm_dd_yyyy, 0.18359375, 0.015625, 0.509765625, 0.08203125)]
-        )
+        [
+            PageCoordinate(
+                1, page_of_total, 0.302734375, 0.0078125, 0.400390625, 0.0859375
+            )
+        ],
+        [
+            DateCoordinate(
+                1,
+                build_mmm_dd_yyyy(1, 1, 2, 3),
+                0.18359375,
+                0.015625,
+                0.509765625,
+                0.08203125,
+            )
+        ],
+    ),
 ]
 
 
