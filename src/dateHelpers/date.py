@@ -75,7 +75,7 @@ def extractDate(className: str, images) -> date:
 
         # get date text
         for currLayout in layout.date:
-            print(f"trying layout: {currLayout.pageNumber}, {currLayout.regex}, {currLayout.x}, {currLayout.y}, {currLayout.h}, {currLayout.w}")
+            print(f"trying layout: {currLayout.pageNumber}, {currLayout.regex.generalRegex}, {currLayout.x}, {currLayout.y}, {currLayout.h}, {currLayout.w}")
             txt = extractText(images[page - 1], currLayout)
 
             # get actual date with regex
