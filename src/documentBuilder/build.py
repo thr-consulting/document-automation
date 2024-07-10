@@ -34,8 +34,8 @@ def createDocuments(results: list[PageResult], images, fileId: str) -> MLFile:
     file.documents = []
 
     if allIncrement(results):
-        # pdf file == [incrementing page numbers with no exception - doesn't have to start at 1]
-        print("all pages are incrementing - no pages are missing")
+        # pdf file == [incrementing page numbers with no exception]
+        print("all pages are incrementing - no exceptions")
 
         # extract date
         date = extractDate(results[0].className, images)
