@@ -1,3 +1,7 @@
+import re
+from typing import Pattern
+
+
 class PageRegex:
     def __init__(self, generalRegex, pagePosition: int, pageOfPosition: int):
         self.generalRegex = generalRegex
@@ -46,16 +50,30 @@ class DateCoordinate(Coordinate):
         self.regex = regex
 
 
+class MyRegex:
+    def __init__(self, groupRegex: Pattern, extractPosition: int):
+        self.groupRegex = groupRegex
+        self.extractPosition = extractPosition
+
+
+class ExtractAmount:
+    def __init__(self, coordinates: Coordinate, myRegex: list[MyRegex]):
+        self.coordinates: Coordinate = coordinates
+        self.amountRegex: list[MyRegex] = myRegex
+
+
 class Layout:
     def __init__(
         self,
         class_name: str,
         pageNumber: list[PageCoordinate],
         date: list[DateCoordinate],
+        amount: list[ExtractAmount] = [],
     ):
         self.className: str = class_name
         self.pageNumber: list[PageCoordinate] = pageNumber
         self.date: list[DateCoordinate] = date
+        self.amount: list[ExtractAmount] = amount
 
 
 page_of_total = PageRegex(r"(\d+)\s*(of|Of|0f|oF|OF|0F)\s*(\d+)", 1, 3)
@@ -504,7 +522,25 @@ layouts = [
                 1, page_of_total, 0.302734375, 0.0078125, 0.400390625, 0.0859375
             )
         ],
-        [DateCoordinate(1, build_mmm_dd_yyyy(1,2,1,3), 0.18359375, 0.015625, 0.509765625, 0.08203125)],
+        [
+            DateCoordinate(
+                1,
+                build_mmm_dd_yyyy(1, 2, 1, 3),
+                0.18359375,
+                0.015625,
+                0.509765625,
+                0.08203125,
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(1, 0.509765625, 0.220703125, 0.4765625, 0.392578125),
+                [
+                    MyRegex(re.compile(r"total.*total"), 1),
+                    MyRegex(re.compile(r"(\d*,?\d+\.\d{2}|\d+)"), -2),
+                ],
+            )
+        ],
     ),
 ]
 

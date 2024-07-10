@@ -1,4 +1,5 @@
 from dateHelpers.date import extractDate
+from extractAmount.amount import extractAmount
 from models.MLFile import MLFile
 from models.MLDocument import MLDocument
 from models.PageResult import PageResult
@@ -44,26 +45,30 @@ def createDocuments(pageResults: list[PageResult], images, fileId: str) -> MLFil
         # extract date
         date = extractDate(pageResults[0].className, images)
         if date:
+            amount = extractAmount(pageResults[0].className, images)
             file.documents.append(
                 MLDocument(
                     pageResults[0].className,
                     list(range(1, len(pageResults) + 1)),
                     date,
+                    amount
                 )
             )
             file.allSorted = True
     
-    if allIncrementWhenSorted(pageResults):
+    elif allIncrementWhenSorted(pageResults):
         print("all pages are incrementing - when sorted by page numbers")
 
         # extract date
         date = extractDate(pageResults[0].className, images)
         if date:
+            amount = extractAmount(pageResults[0].className, images)
             file.documents.append(
                 MLDocument(
                     pageResults[0].className,
                     list(range(1, len(pageResults) + 1)),
                     date,
+                    amount
                 )
             )
             file.allSorted = True
