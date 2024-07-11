@@ -1,5 +1,6 @@
 import re
-from typing import Pattern
+
+from models.MyRegex import MyRegex
 
 
 class PageRegex:
@@ -48,12 +49,6 @@ class DateCoordinate(Coordinate):
     ):
         super().__init__(pageNumber, x, y, w, h)
         self.regex = regex
-
-
-class MyRegex:
-    def __init__(self, groupRegex: Pattern, extractPosition: int):
-        self.groupRegex = groupRegex
-        self.extractPosition = extractPosition
 
 
 class ExtractAmount:

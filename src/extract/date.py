@@ -1,7 +1,7 @@
 from datetime import date
 import re
 from data.layouts import DateRegex, Layout, getLayout
-from ocr.extract import extractText
+from extract.ocr import extractText
 
 
 def txtToDay(general: str, regex: DateRegex) -> int:

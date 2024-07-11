@@ -5,7 +5,7 @@ import torch
 from documentBuilder.build import createDocuments
 from images.pdf2jpg import pdf2JpgFromURL
 from models.MLFile import convert_to_json
-from pageNumberHelpers.extractPageNumber import assignPageNumbers
+from extract.pageNumber import assignPageNumbers
 from pytorch import load_model, predict_images
 from dotenv import load_dotenv
 

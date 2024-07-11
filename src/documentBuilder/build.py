@@ -1,5 +1,5 @@
-from dateHelpers.date import extractDate
-from extractAmount.amount import extractAmount
+from extract.date import extractDate
+from extract.amount import extractAmount
 from models.MLFile import MLFile
 from models.MLDocument import MLDocument
 from models.PageResult import PageResult

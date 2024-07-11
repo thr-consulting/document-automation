@@ -2,13 +2,10 @@ from typing import Pattern
 import re
 
 from data.layouts import Layout, getLayout
-from ocr.extract import extractText
+from extract.ocr import extractText
+from models.MyRegex import MyRegex
 
 
-class MyRegex:
-    def __init__(self, groupRegex: Pattern, extractPosition: int):
-        self.groupRegex = groupRegex
-        self.extractPosition = extractPosition
 
 # -2 implies get last match
 def txtToAmount(text: str, regex: list[MyRegex]):

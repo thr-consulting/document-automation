@@ -2,7 +2,7 @@ import re
 
 from data.layouts import PageRegex, getLayout
 from models.PageResult import PageResult
-from ocr.extract import extractText
+from extract.ocr import extractText
 
 
 def txtToPageNumber(pageRegex: PageRegex, txt):
