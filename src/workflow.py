@@ -48,7 +48,7 @@ def workflow(pdf_path, file_id: str = "file_id"):
     images = pdf2JpgFromURL(pdf_path)
 
     if len(images) > 10:
-        print("more than 5 images... skip processing")
+        print("more than 10 images... skip processing")
         return None
 
     # assign classes
