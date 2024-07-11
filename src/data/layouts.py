@@ -504,7 +504,7 @@ layouts = [
         ],
         [
             ExtractAmount(
-                Coordinate(1, 0.509765625, 0.220703125, 0.4765625, 0.392578125),
+                Coordinate(1, 0.50390625, 0.259765625, 0.5625, 0.240234375),
                 [
                     MyRegex(re.compile(r"total.*total"), 1),
                     MyRegex(re.compile(r"(\d*,?\d+\.\d{2}|\d+)"), -2),
