@@ -35,19 +35,19 @@ class Coordinate:
         self.h: int = h
 
 
-class PageCoordinate(Coordinate):
+class ExtractPageNumber:
     def __init__(
         self, pageNumber: int, regex: PageRegex, x: float, y: float, w: float, h: float
     ):
-        super().__init__(pageNumber, x, y, w, h)
+        self.coordinate = Coordinate(pageNumber, x, y, w, h)
         self.regex = regex
 
 
-class DateCoordinate(Coordinate):
+class ExtractDate:
     def __init__(
         self, pageNumber: int, regex: DateRegex, x: float, y: float, w: float, h: float
     ):
-        super().__init__(pageNumber, x, y, w, h)
+        self.coordinate = Coordinate(pageNumber, x, y, w, h)
         self.regex = regex
 
 
@@ -61,13 +61,13 @@ class Layout:
     def __init__(
         self,
         class_name: str,
-        pageNumber: list[PageCoordinate],
-        date: list[DateCoordinate],
+        pageNumber: list[ExtractPageNumber],
+        date: list[ExtractDate],
         amount: list[ExtractAmount] = [],
     ):
         self.className: str = class_name
-        self.pageNumber: list[PageCoordinate] = pageNumber
-        self.date: list[DateCoordinate] = date
+        self.pageNumber: list[ExtractPageNumber] = pageNumber
+        self.date: list[ExtractDate] = date
         self.amount: list[ExtractAmount] = amount
 
 
@@ -90,17 +90,17 @@ mmm_dd_yy = DateRegex(
 )
 
 
-def build_mmm_dd_yyyy(general_position, day_position, month_position, year_position):
+def build_mmm_dd_yyyy(general_position):
     return DateRegex(
         r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
         general_position,
-        day_position,
-        month_position,
-        year_position,
+        2,
+        1,
+        3,
     )
 
 
-mb_cu_date_coordinate = DateCoordinate(
+mb_cu_date_coordinate = ExtractDate(
     1,
     mmmm_dd_yyyy,
     0.02734375,
@@ -109,7 +109,7 @@ mb_cu_date_coordinate = DateCoordinate(
     0.119140625,
 )
 
-mb_cu_page_coordinate = PageCoordinate(
+mb_cu_page_coordinate = ExtractPageNumber(
     1, page_of_total, 0.787109375, 0.884765625, 0.1796875, 0.099609375
 )
 
@@ -117,7 +117,7 @@ layouts = [
     Layout(
         "TD Bank",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.6698039215686274,
@@ -125,7 +125,7 @@ layouts = [
                 0.23215686274509803,
                 0.02303030303030303,
             ),
-            PageCoordinate(
+            ExtractPageNumber(
                 2,
                 page_of_total,
                 0.792156862745098,
@@ -135,7 +135,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 mmm_dd_yy,
                 0.6698039215686274,
@@ -148,7 +148,7 @@ layouts = [
     Layout(
         "BMO Bank",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.054901960784313725,
@@ -158,7 +158,7 @@ layouts = [
             )
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
@@ -177,7 +177,7 @@ layouts = [
     Layout(
         "CIBC Bank",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.8094117647058824,
@@ -187,7 +187,7 @@ layouts = [
             )
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
@@ -206,7 +206,7 @@ layouts = [
     Layout(
         "RBC Bank",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.9003921568627451,
@@ -214,7 +214,7 @@ layouts = [
                 0.08941176470588236,
                 0.0503030303030303,
             ),
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.876078431372549,
@@ -224,7 +224,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 mmmm_dd_yyyy,
                 0.596078431372549,
@@ -232,7 +232,7 @@ layouts = [
                 0.396078431372549,
                 0.044848484848484846,
             ),
-            DateCoordinate(
+            ExtractDate(
                 1,
                 mmmm_dd_yyyy,
                 0.6392156862745098,
@@ -245,7 +245,7 @@ layouts = [
     Layout(
         "Scotia Bank",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.8862745098039215,
@@ -255,7 +255,7 @@ layouts = [
             )
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
@@ -274,7 +274,7 @@ layouts = [
     Layout(
         "RBC Credit",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.5121568627450981,
@@ -284,7 +284,7 @@ layouts = [
             )
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
@@ -303,10 +303,10 @@ layouts = [
     Layout(
         "TD Credit",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1, page_of_total, 0.486328125, 0.15625, 0.08984375, 0.025390625
             ),
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.2196078431372549,
@@ -316,7 +316,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
@@ -335,7 +335,7 @@ layouts = [
     Layout(
         "Scotia Credit",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.876078431372549,
@@ -343,7 +343,7 @@ layouts = [
                 0.09333333333333334,
                 0.01575757575757576,
             ),
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.832156862745098,
@@ -353,7 +353,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
@@ -407,7 +407,7 @@ layouts = [
     Layout(
         "MBNA Credit",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.8818466353677621,
@@ -415,7 +415,7 @@ layouts = [
                 0.11189358372456965,
                 0.019393939393939394,
             ),
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_of_total,
                 0.8649921507064364,
@@ -425,7 +425,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(r"(\d\d)/(\d\d)/(\d\d)", 2, 2, 1, 3),
                 0.690923317683881,
@@ -438,11 +438,11 @@ layouts = [
     Layout(
         "Big Freight",
         [
-            PageCoordinate(1, page_of_total, 0.826171875, 0.86328125, 0.1640625, 0.125),
-            PageCoordinate(1, page_of_total, 0.0, 0.728515625, 0.12109375, 0.26171875),
+            ExtractPageNumber(1, page_of_total, 0.826171875, 0.86328125, 0.1640625, 0.125),
+            ExtractPageNumber(1, page_of_total, 0.0, 0.728515625, 0.12109375, 0.26171875),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"Pay\D+Period\D{1,2}(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3
@@ -452,7 +452,7 @@ layouts = [
                 0.419921875,
                 0.119140625,
             ),
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(
                     r"Pay\D+Period\D{1,2}(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3
@@ -467,7 +467,7 @@ layouts = [
     Layout(
         "TransX",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_number,
                 0.38176470588235295,
@@ -477,7 +477,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(r"(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3),
                 0.6447058823529411,
@@ -490,7 +490,7 @@ layouts = [
     Layout(
         "DeckX",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1,
                 page_number,
                 0.38176470588235295,
@@ -500,7 +500,7 @@ layouts = [
             ),
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
                 DateRegex(r"(\d{1,2})/(\d{1,2})/(\d\d\d\d)", 1, 2, 1, 3),
                 0.6447058823529411,
@@ -513,14 +513,14 @@ layouts = [
     Layout(
         "Rogers",
         [
-            PageCoordinate(
+            ExtractPageNumber(
                 1, page_of_total, 0.302734375, 0.0078125, 0.400390625, 0.0859375
             )
         ],
         [
-            DateCoordinate(
+            ExtractDate(
                 1,
-                build_mmm_dd_yyyy(1, 2, 1, 3),
+                build_mmm_dd_yyyy(1),
                 0.18359375,
                 0.015625,
                 0.509765625,

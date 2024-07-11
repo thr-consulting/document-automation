@@ -52,9 +52,7 @@ def txtToDate(txt: str, regex: DateRegex) -> date:
         extracted_month = txtToMonth(general, regex)
         extracted_year = txtToYear(general, regex)
 
-        extracted_date = date(
-            extracted_year, extracted_month, extracted_day
-        )
+        extracted_date = date(extracted_year, extracted_month, extracted_day)
 
         print(f"date: {extracted_date.isoformat()}")
         return extracted_date
@@ -71,12 +69,14 @@ def extractDate(className: str, images) -> date:
     if layout:
         print("FOUND layout for className: {}".format(className))
         # get which page to extract date from
-        page = layout.date[0].pageNumber
+        page = layout.date[0].coordinate.pageNumber
 
         # get date text
         for currLayout in layout.date:
-            print(f"trying layout: {currLayout.pageNumber}, {currLayout.regex.generalRegex}, {currLayout.x}, {currLayout.y}, {currLayout.h}, {currLayout.w}")
-            txt = extractText(images[page - 1], currLayout)
+            print(
+                f"trying layout: {currLayout.coordinate.pageNumber}, {currLayout.regex.generalRegex}, {currLayout.coordinate.x}, {currLayout.coordinate.y}, {currLayout.coordinate.h}, {currLayout.coordinate.w}"
+            )
+            txt = extractText(images[page - 1], currLayout.coordinate)
 
             # get actual date with regex
             date = txtToDate(txt, currLayout.regex)
@@ -84,7 +84,7 @@ def extractDate(className: str, images) -> date:
             if date:
                 print(f"found date: {date}")
                 return date
-        
+
         return None
     else:
         print("FAILED to find layout for className: {}".format(className))

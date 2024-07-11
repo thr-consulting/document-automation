@@ -32,12 +32,12 @@ def extractPageNumberText(page: PageResult, image, className: str):
 
     # get page num text
     if layout:
-        for l in layout.pageNumber:
-            txt = extractText(image, l)
+        for pageRegex in layout.pageNumber:
+            txt = extractText(image, pageRegex.coordinate)
 
             # get actual page number
             if len(txt):
-                p_num, p_of = txtToPageNumber(l.regex, txt)
+                p_num, p_of = txtToPageNumber(pageRegex.regex, txt)
 
                 page.predictedPageNum = p_num
                 page.predictedPageNumOf = p_of
