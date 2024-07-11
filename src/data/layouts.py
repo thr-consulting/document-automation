@@ -398,7 +398,7 @@ layouts = [
         [
             ExtractDate(
                 1,
-                DateRegex(r"(\d\d)/(\d\d)/(\d\d)", 2, 2, 1, 3),
+                build_mm_dd_yy(2),
                 0.708984375,
                 0.09375,
                 0.283203125,
