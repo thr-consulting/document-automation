@@ -104,6 +104,18 @@ def build_mmmm_dd_yyyy(general_position: int):
         3,
     )
 
+def build_mmm_dd_yyyy(general_position: int):
+    return DateRegex(
+        r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
+        general_position,
+        2,
+        1,
+        3,
+    )
+
+
+def build_mm_dd_yyyy(general_position: int):
+    return DateRegex(r"(\d{1,2})/(\d\d)/(\d{4})", general_position, 2, 1, 3)
 
 def build_mm_dd_yy(general_position: int):
     return DateRegex(r"(\d\d)/(\d\d)/(\d\d)", general_position, 2, 1, 3)
@@ -582,6 +594,20 @@ layouts = [
         [
             ExtractDate(
                 1, build_mmm_dd_yyyy(1), 0.712890625, 0.046875, 0.279296875, 0.08203125
+            )
+        ],
+        [],
+    ),
+    Layout(
+        "Steves Livestock",
+        [
+            ExtractPageNumber(
+                1, PageRegex(r"Page\D+(\d{1,2})", 1, -1), 0.296875, 0.947265625, 0.341796875, 0.046875
+            ),
+        ],
+        [
+            ExtractDate(
+                1, build_mm_dd_yyyy(2), 0.5625, 0.009765625, 0.435546875, 0.1328125
             )
         ],
         [],
