@@ -9,7 +9,7 @@ load_dotenv()
 
 
 async def doSomethingAsync(job, job_token):
-    print("\n---\nreceived job: {}".format(job.id))
+    print(f"\n\n----- received job: {job.id} -----")
     print("job name: {}".format(job.name))
     print("job data: {}".format(job.data))
     result = None

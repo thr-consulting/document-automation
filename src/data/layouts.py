@@ -527,7 +527,12 @@ layouts = [
         "Bell Mobility",
         [
             ExtractPageNumber(
-                1, PageRegex(r"(\d+)(\D+/\D+)(\d+)", 1, 3), 0.78515625, 0.0234375, 0.20703125, 0.140625
+                1,
+                PageRegex(r"(\d+)(\D+/\D+)(\d+)", 1, 3),
+                0.78515625,
+                0.0234375,
+                0.20703125,
+                0.140625,
             ),
         ],
         [
@@ -545,7 +550,7 @@ layouts = [
             )
         ],
     ),
-     Layout(
+    Layout(
         "Bell",
         [
             ExtractPageNumber(
@@ -566,6 +571,20 @@ layouts = [
                 ],
             )
         ],
+    ),
+    Layout(
+        "Bison",
+        [
+            ExtractPageNumber(
+                1, PageRegex(r"(\d+)(\D?/\D?)(\d+)", 1, 3), 0.345703125, 0.91796875, 0.28125, 0.078125
+            ),
+        ],
+        [
+            ExtractDate(
+                1, build_mmm_dd_yyyy(1), 0.712890625, 0.046875, 0.279296875, 0.08203125
+            )
+        ],
+        [],
     ),
 ]
 

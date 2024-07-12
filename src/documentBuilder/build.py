@@ -112,7 +112,7 @@ def createDocuments(pageResults: list[PageResult], images, fileId: str) -> MLFil
             file.partialSort = True
 
     print("\n---\nfile id: {}".format(file.id))
-    print(f"\n---\nall pages sorted: {file.allSorted}\n---")
+    print(f"\n---\nall pages sorted: {file.allSorted}\npartial sorting: {file.partialSort}\n---")
     for i in file.documents:
         print(i.className, i.date, i.pages)
 
