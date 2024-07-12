@@ -13,7 +13,9 @@ def extractText(image, extract: Coordinate):
 
     # Perform OCR on the cropped image
     text = pytesseract.image_to_string(cropped_image)
-    print(f"OCR: {text}")
+    print("\n--- OCR start ---")
+    print(f"{text}")
+    print("--- OCR end ---")
 
     # Return the extracted text
     return text

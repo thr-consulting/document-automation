@@ -442,9 +442,7 @@ layouts = [
     Layout(
         "TransX",
         [
-            ExtractPageNumber(
-                1, page_number, 0.296875, 0.92, 0.32421875, 0.12109375
-            ),
+            ExtractPageNumber(1, page_number, 0.296875, 0.92, 0.32421875, 0.12109375),
         ],
         [
             ExtractDate(
@@ -460,9 +458,7 @@ layouts = [
     Layout(
         "DeckX",
         [
-            ExtractPageNumber(
-                1, page_number, 0.296875, 0.92, 0.32421875, 0.12109375
-            ),
+            ExtractPageNumber(1, page_number, 0.296875, 0.92, 0.32421875, 0.12109375),
         ],
         [
             ExtractDate(
@@ -498,6 +494,75 @@ layouts = [
                 [
                     MyRegex(re.compile(r"total.*total"), 1),
                     MyRegex(re.compile(r"(\d*,?\d+\.\d{2}|\d+)"), -2),
+                ],
+            )
+        ],
+    ),
+    Layout(
+        "Telus",
+        [
+            ExtractPageNumber(
+                1, page_of_total, 0.8359375, 0.55859375, 0.158203125, 0.19921875
+            ),
+            ExtractPageNumber(
+                1, page_of_total, 0.712890625, 0.8671875, 0.28125, 0.12890625
+            ),
+        ],
+        [
+            ExtractDate(
+                1, build_mmmm_dd_yyyy(1), 0.1953125, 0.00390625, 0.32421875, 0.087890625
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(1, 0.044921875, 0.255859375, 0.580078125, 0.322265625),
+                [
+                    MyRegex(re.compile(r"Total.*Total"), 1),
+                    MyRegex(re.compile(r"(\d+\.\d{2})"), 1),
+                ],
+            )
+        ],
+    ),
+    Layout(
+        "Bell Mobility",
+        [
+            ExtractPageNumber(
+                1, PageRegex(r"(\d+)(\D+/\D+)(\d+)", 1, 3), 0.78515625, 0.0234375, 0.20703125, 0.140625
+            ),
+        ],
+        [
+            ExtractDate(
+                1, build_mmmm_dd_yyyy(1), 0.78515625, 0.0234375, 0.20703125, 0.140625
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(1, 0.107421875, 0.1796875, 0.595703125, 0.38671875),
+                [
+                    MyRegex(re.compile(r"Total\s+current\D+\d+\.\d{2}"), 1),
+                    MyRegex(re.compile(r"(\d+\.\d{2})"), 1),
+                ],
+            )
+        ],
+    ),
+     Layout(
+        "Bell",
+        [
+            ExtractPageNumber(
+                1, page_of_total, 0.771484375, 0.00390625, 0.22265625, 0.05078125
+            ),
+        ],
+        [
+            ExtractDate(
+                1, build_mmmm_dd_yyyy(1), 0.66015625, 0.09765625, 0.337890625, 0.140625
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(1, 0.0078125, 0.16015625, 0.671875, 0.1484375),
+                [
+                    MyRegex(re.compile(r"New\s+Charges\D+\d+\.\d{2}"), 1),
+                    MyRegex(re.compile(r"(\d+\.\d{2})"), 1),
                 ],
             )
         ],

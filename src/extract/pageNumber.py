@@ -66,9 +66,9 @@ def assignPageNumbers(results: list[PageResult], images):
 
         # step 2: current page is different than previous page
 
-    print("")
+    print("---- start")
     for result in results:
         print(
-            f"{result.className} -- {result.predictScore} -- {result.predictedPageNum}"
+            f"{result.predictedPageNum} | {result.className} | {result.predictScore}"
         )
-    print("-------------\n")
+    print("---- end\n")
