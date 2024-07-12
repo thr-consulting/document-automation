@@ -12,7 +12,7 @@ def txtToAmount(text: str, regex: list[MyRegex]):
     txt = text
 
     for r in regex:
-        print(r.groupRegex.pattern)
+        print(f"\ncurrent pattern: {r.groupRegex.pattern}")
         match = re.findall(r.groupRegex.pattern, txt, flags=re.DOTALL | re.IGNORECASE)
         if len(match) == 0:
             print(f"-no matches found for pattern: {r.groupRegex.pattern}")
@@ -22,7 +22,7 @@ def txtToAmount(text: str, regex: list[MyRegex]):
             txt = match[len(match) - 1]
         else:
             txt = match[r.extractPosition - 1]
-        print(txt)
+        print(f"text: {txt}")
 
     return float(txt.replace(',',''))
 
