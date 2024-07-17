@@ -56,6 +56,16 @@ def build_mmm_dd_yyyy(general_position: int):
     )
 
 
+def build_MB_Hydro_Date():
+    return DateRegex(
+        r"Date\s*issued\W+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\D+(\d{1,2})\D+(\d{4})",
+        1,
+        2,
+        1,
+        3,
+    )
+
+
 def build_mm_dd_yyyy(general_position: int):
     return DateRegex(r"(\d{1,2})/(\d\d)/(\d{4})", general_position, 2, 1, 3)
 
@@ -564,6 +574,82 @@ layouts = [
             )
         ],
         [],
+    ),
+    Layout(
+        "Wpg Water Waste Department",
+        [
+            ExtractPageNumber(
+                1,
+                page_of_total,
+                0.607421875,
+                0.8515625,
+                0.306640625,
+                0.14453125,
+            ),
+        ],
+        [
+            ExtractDate(
+                1,
+                build_mmmm_dd_yyyy(2),
+                0.42374213836477986,
+                0.1275820170109356,
+                0.5731132075471698,
+                0.11543134872417983,
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(
+                    1,
+                    0.42059748427672955,
+                    0.24179829890643986,
+                    0.5778301886792453,
+                    0.3863912515188335,
+                ),
+                [
+                    MyRegex(re.compile(r"Total\s+New\s+Charges\D+\d+\.\d{2}"), 1),
+                    MyRegex(re.compile(r"(\d+\.\d{2})"), 1),
+                ],
+            )
+        ],
+    ),
+    Layout(
+        "MB Hydro",
+        [
+            ExtractPageNumber(
+                1,
+                PageRegex(r"(\d)\D{1,3}(\d)", 1, 2),
+                0.7168627450980393,
+                0.005454545454545455,
+                0.2784313725490196,
+                0.06848484848484848,
+            ),
+        ],
+        [
+            ExtractDate(
+                1,
+                build_MB_Hydro_Date(),
+                0.4206787687450671,
+                0.01398176291793313,
+                0.5714285714285714,
+                0.23100303951367782,
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(
+                    1,
+                    0.43296529968454256,
+                    0.2884848484848485,
+                    0.5654574132492114,
+                    0.3981818181818182,
+                ),
+                [
+                    MyRegex(re.compile(r"New\s+charges.*Amount\s+Due"), 1),
+                    MyRegex(re.compile(r"(\d+\.\d{2})"), -2),
+                ],
+            )
+        ],
     ),
 ]
 

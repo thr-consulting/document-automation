@@ -5,6 +5,17 @@ from models.MLDocument import MLDocument
 from models.PageResult import PageResult
 
 
+def isFirstPageMBHydro(pageResults: list[PageResult]) -> bool:
+    result = len(pageResults) and pageResults[0].className == "MB Hydro"
+    print(f"first page is MB Hydro: {result}")
+    return result
+
+def isFirstPageWpgWWDepartment(pageResults: list[PageResult]) -> bool:
+    result = len(pageResults) and pageResults[0].className == "Wpg Water Waste Department"
+    print(f"first page is Wpg Water Waste Department: {result}")
+    return result
+
+
 def allIncrement(pageResults: list[PageResult]) -> bool:
     if len(pageResults) == 1:
         return pageResults[0].predictedPageNum == 1
@@ -35,7 +46,7 @@ def allIncrementLastPageEmpty(pageResults: list[PageResult]) -> bool:
             return False
 
     # make sure last page is "Empty Page"
-    return pageResults[len(pageResults)-1].className == "Empty Page"
+    return pageResults[len(pageResults) - 1].className == "Empty Page"
 
 
 def allSameVendor(pageResults: list[PageResult]) -> bool:
@@ -54,7 +65,47 @@ def createDocuments(pageResults: list[PageResult], images, fileId: str) -> MLFil
     file: MLFile = MLFile(fileId)
     file.documents = []
 
-    if allIncrement(pageResults):
+    if isFirstPageMBHydro(pageResults):
+        MB_HYDRO = "MB Hydro"
+
+        if len(pageResults) == 1:
+            date = extractDate(MB_HYDRO, images)
+            if date:
+                amount = extractAmount(MB_HYDRO, images)
+
+                file.documents.append(
+                    MLDocument(
+                        pageResults[0].className,
+                        list(range(1, len(pageResults) + 1)),
+                        date,
+                        amount,
+                    )
+                )
+
+                file.allSorted = True
+                file.partialSort = True
+
+    elif isFirstPageWpgWWDepartment(pageResults):
+        WPG_WW_Department = "Wpg Water Waste Department"
+
+        if len(pageResults) == 1:
+            date = extractDate(WPG_WW_Department, images)
+            if date:
+                amount = extractAmount(WPG_WW_Department, images)
+
+                file.documents.append(
+                    MLDocument(
+                        pageResults[0].className,
+                        list(range(1, len(pageResults) + 1)),
+                        date,
+                        amount,
+                    )
+                )
+
+                file.allSorted = True
+                file.partialSort = True
+
+    elif allIncrement(pageResults):
         print("all pages are incrementing - no exceptions")
 
         # extract date
@@ -112,7 +163,9 @@ def createDocuments(pageResults: list[PageResult], images, fileId: str) -> MLFil
             file.partialSort = True
 
     print("\n---\nfile id: {}".format(file.id))
-    print(f"\n---\nall pages sorted: {file.allSorted}\npartial sorting: {file.partialSort}\n---")
+    print(
+        f"\n---\nall pages sorted: {file.allSorted}\npartial sorting: {file.partialSort}\n---"
+    )
     for i in file.documents:
         print(i.className, i.date, i.pages)
 
