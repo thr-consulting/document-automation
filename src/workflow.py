@@ -1,7 +1,7 @@
 import os
-import json
 import torch
 
+from data.classes_237 import getClasses
 from documentBuilder.build import createDocuments
 from images.pdf2jpg import pdf2JpgFromURL
 from models.MLFile import convert_to_json
@@ -12,7 +12,6 @@ import urllib.request
 import tempfile
 
 load_dotenv()
-
 
 def is_url(path):
     return path.startswith('http://') or path.startswith('https://')
@@ -29,19 +28,9 @@ MODEL_IMAGE_SIZE = int(os.getenv("MODEL_IMAGE_SIZE", 512))
 
 print(f"pytorch version: {torch.__version__}\n")
 
+classes = getClasses()
+print(f"{len(classes)} classes loaded\n")
 
-# classes
-CLASSES_PATH = "./data/classes_237.json"
-
-try:
-    classes = json.load(open(CLASSES_PATH))
-    print(f"{len(classes)} classes loaded\n")
-except Exception as e:
-    print("--")
-    print("Error loading the classes file")
-    print(f"classes path: {CLASSES_PATH}")
-    print(e)
-    print("--")
 
 # load model
 device = torch.device("cpu")
