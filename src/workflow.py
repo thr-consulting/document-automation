@@ -31,7 +31,6 @@ print(f"pytorch version: {torch.__version__}\n")
 classes = getClasses()
 print(f"{len(classes)} classes loaded\n")
 
-
 # load model
 device = torch.device("cpu")
 
