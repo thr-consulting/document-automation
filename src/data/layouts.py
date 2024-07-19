@@ -66,6 +66,16 @@ def build_MB_Hydro_Date():
     )
 
 
+def build_Valley_Fiber_Date():
+    return DateRegex(
+        r"(\d{1,2})/(\d{1,2})/(\d{4})",
+        1,
+        2,
+        1,
+        3,
+    )
+
+
 def build_mm_dd_yyyy(general_position: int):
     return DateRegex(r"(\d{1,2})/(\d\d)/(\d{4})", general_position, 2, 1, 3)
 
@@ -647,6 +657,38 @@ layouts = [
                 [
                     MyRegex(re.compile(r"New\s+charges.*Amount\s+Due"), 1),
                     MyRegex(re.compile(r"(\d+\.\d{2})"), -2),
+                ],
+            )
+        ],
+    ),
+    Layout(
+        "Valley Fiber",
+        [],
+        [
+            ExtractDate(
+                1,
+                build_Valley_Fiber_Date(),
+                0.41646489104116224,
+                0.2825278810408922,
+                0.2122679580306699,
+                0.137546468401487,
+            )
+        ],
+        [
+            ExtractAmount(
+                Coordinate(
+                    1,
+                    0.6133979015334947,
+                    0.4838909541511772,
+                    0.3817594834543987,
+                    0.22366790582403964,
+                ),
+                [
+                    MyRegex(
+                        re.compile(r"Total\s+for\s+this\s+invoice.*Balance\s+forward"),
+                        1,
+                    ),
+                    MyRegex(re.compile(r"(\d+\.\d{2})"), 1),
                 ],
             )
         ],

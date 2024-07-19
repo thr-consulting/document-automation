@@ -5,6 +5,11 @@ from models.MLDocument import MLDocument
 from models.PageResult import PageResult
 
 
+def isSinglePageValleyFiber(pageResults: list[PageResult]) -> bool:
+    result = len(pageResults) == 1 and pageResults[0].className == "Valley Fiber"
+    print(f"single page is valley fiber: {result}")
+    return result
+
 def isFirstPageMBHydro(pageResults: list[PageResult]) -> bool:
     result = len(pageResults) and pageResults[0].className == "MB Hydro"
     print(f"first page is MB Hydro: {result}")
@@ -65,7 +70,26 @@ def createDocuments(pageResults: list[PageResult], images, fileId: str) -> MLFil
     file: MLFile = MLFile(fileId)
     file.documents = []
 
-    if isFirstPageMBHydro(pageResults):
+    if isSinglePageValleyFiber(pageResults):
+        VALLEY_FIBER = "Valley Fiber"
+
+        if len(pageResults) == 1:
+            date = extractDate(VALLEY_FIBER, images)
+            if date:
+                amount = extractAmount(VALLEY_FIBER, images)
+
+                file.documents.append(
+                    MLDocument(
+                        pageResults[0].className,
+                        list(range(1, len(pageResults) + 1)),
+                        date,
+                        amount,
+                    )
+                )
+
+                file.allSorted = True
+                file.partialSort = True       
+    elif isFirstPageMBHydro(pageResults):
         MB_HYDRO = "MB Hydro"
 
         if len(pageResults) == 1:
