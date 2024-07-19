@@ -31,7 +31,6 @@ print(f"pytorch version: {torch.__version__}\n")
 
 
 # classes
-# CLASSES_PATH = os.environ["MODEL_CLASSES_PATH"]
 CLASSES_PATH = "./data/classes_237.json"
 
 try:
