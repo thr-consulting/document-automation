@@ -7,9 +7,9 @@ from PIL import Image
 
 
 def load_model(model_path, class_names, size, device):
-    print(f"using device: {device}")
-    print(f"model_path: {model_path}")
-    print("loading model...")
+    print('\n---')
+    print(f"Device: {device}")
+    print(f"MODEL_PATH: {model_path}")
 
     # Define transforms for the input image
     transform = transforms.Compose(
@@ -30,6 +30,8 @@ def load_model(model_path, class_names, size, device):
     # Set the model to evaluation mode
     model.eval()
 
+    print("model loaded")
+    print('---\n')
     return model, transform
 
 
