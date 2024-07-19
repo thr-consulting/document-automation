@@ -29,8 +29,10 @@ MODEL_IMAGE_SIZE = int(os.environ["MODEL_IMAGE_SIZE"])
 
 print(f"pytorch version: {torch.__version__}\n")
 
+
 # classes
-CLASSES_PATH = os.environ["MODEL_CLASSES_PATH"]
+# CLASSES_PATH = os.environ["MODEL_CLASSES_PATH"]
+CLASSES_PATH = "./data/classes_237.json"
 
 try:
     classes = json.load(open(CLASSES_PATH))
