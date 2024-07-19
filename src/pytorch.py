@@ -10,6 +10,7 @@ def load_model(model_path, class_names, size, device):
     print('\n---')
     print(f"Device: {device}")
     print(f"MODEL_PATH: {model_path}")
+    print(f"MODEL_IMAGE_SIZE: {size}")
 
     # Define transforms for the input image
     transform = transforms.Compose(
