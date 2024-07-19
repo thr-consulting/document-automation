@@ -25,10 +25,12 @@ def download_model(url):
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # run on cpu
 
 MODEL_PATH = os.environ["MODEL_PATH"]
-MODEL_IMAGE_SIZE = int(os.environ["MODEL_IMAGE_SIZE"])
+MODEL_IMAGE_SIZE = os.environ["MODEL_IMAGE_SIZE"]
 
 if MODEL_IMAGE_SIZE == None:
     MODEL_IMAGE_SIZE=512
+else:
+    MODEL_IMAGE_SIZE=int(MODEL_IMAGE_SIZE)
 
 print(f"pytorch version: {torch.__version__}\n")
 
